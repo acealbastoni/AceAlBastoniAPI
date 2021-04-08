@@ -50,9 +50,7 @@ function updateInSheet(Field, date, countOfEmails, color) {
 
   var headerHorizon = sheet.getDataRange().getValues()[0];
   var dateColumnNumber = headerHorizon.indexOf(Field.toString()) + 1;
-
   var LastRow = sheet.getDataRange().getLastRow();
-
   var headerVertival = sheet.getRange(1, 1, LastRow).getValues();
   headerVertival = headerVertival.map(item => item[0].toString());
   var FieldNumber = headerVertival.indexOf(date.toString()) + 1;
@@ -92,7 +90,6 @@ function getEmailsOf(sheetName){
  For Example {"2021/01/01":6}
 */
 function get_KVP_Object(sheetName, columnName_asKey, columnName_asValue){
-   
     var sheet = SpreadsheetApp.openById(AceAlBastoni_Spreadsheet).getSheetByName(sheetName);
     var dataRange = sheet.getDataRange().getValues();
     var keyNum = dataRange[0].indexOf(columnName_asKey);
@@ -106,48 +103,19 @@ function get_KVP_Object(sheetName, columnName_asKey, columnName_asValue){
         if (dataRange.indexOf(arr) == 0  ||falsy.indexOf(key) >= 0 || falsy.indexOf(value)>=0) {
             continue;
         }
-       
         ob[key] = value
     }
   return ob;
 }
-
-
-
-
-
-
-////////
-
 function updateRemovedSheet(notFoundEmails) {
-  
-  var removedEmails = getRemovedEmails();   
+    var removedEmails = getRemovedEmails();   
   removedEmails =  removedEmails.concat(notFoundEmails?notFoundEmails:removedEmails);
   removedEmails  = unique(removedEmails);
-  
   removedEmails = removedEmails.map(item=>[item])
   var sheet = SpreadsheetApp.openById(AceAlBastoni_Spreadsheet).getSheetByName('Removed_4');
   sheet.clear()
-   var last =  sheet.getDataRange().getLastRow()+1;
+  var last =  sheet.getDataRange().getLastRow()+1;
   sheet.getRange(last, 1, removedEmails.length, 1).setValues(removedEmails);
-  
-  
   return       //.toString().match(/[.\w-]+@([\w-]+\.)+[\w-]+/g);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
